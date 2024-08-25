@@ -6,3 +6,18 @@ SELECT count(distinct order_id) as orders_canceled,
 FROM   courier_actions
 WHERE  order_id in (SELECT*
                     FROM   t1)
+
+
+
+
+
+with oldest_female as (SELECT min(birth_date)
+                       FROM   users
+                       WHERE  sex = 'female')
+SELECT user_id,
+       birth_date
+FROM   users
+WHERE  sex = 'male'
+   and birth_date < (SELECT *
+                  FROM   oldest_female)
+ORDER BY user_id;
